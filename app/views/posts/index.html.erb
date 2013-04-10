@@ -8,6 +8,15 @@
 	</tr>
 	<tr style="height:5px"></tr>
 	<% end %>
+	<% if @posts.empty? %>
+	<tr>
+		<td>
+			no posts here...
+		</td>
+	</tr>
+	<tr style="height:5px"></tr>
+
+	<% end %>
 	<tr style="height:10px"></tr>
 	<tr><td colspan=2></td><td class="title"><%= paginate @posts %></td></tr>
 </table>
