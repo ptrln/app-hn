@@ -22,6 +22,6 @@ class User < ActiveRecord::Base
 	def average_karma
 		post_karma = Post.joins(:post_votes).where("posts.user_id = ?", self.id).count
 		post_count = posts.count
-		post_karma / post_count
+		post_count == 0 ? "N/A" : post_karma / post_count
 	end
 end
