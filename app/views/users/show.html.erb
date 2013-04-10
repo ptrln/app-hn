@@ -38,6 +38,7 @@
           </li>
         <% end %>
         </ol>
+        <%= "no posts" if @user.posts.empty? %>
         <% if @user.posts.count > 10 %>
           <p>see more... (not implemented yet)</p>
         <% end %>
@@ -54,6 +55,7 @@
           </li>
         <% end %>
         </ol>
+        <%= "no comments" if @user.comments.empty? %>
         <% if @user.comments.count > 10 %>
           <p>see more... (not implemented yet)</p>
         <% end %>
