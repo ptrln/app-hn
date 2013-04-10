@@ -1,28 +1,37 @@
-
 <table border="0">
 	<tbody>
 		<tr>
-			<td>
+			<td valign="top">
 				<center>
-					<a id="up_5519136" href="/">
+					<a href="#">
 						<img src="/grayarrow.gif" border="0" vspace="3" hspace="2">
 					</a>
-					<span id="down_5519136"></span>
 				</center>
 			</td>
-			<td class="title"><%= @comment.body %></td>
-		</tr>
-		<tr>
-			<td colspan="1"></td>
-			<td class="subtext">
-				<span id="score_5519136">unknown points</span> 
-				by <%= link_to @comment.user.screen_name, user_path(@comment.user) %> 
-				<%= time_ago_in_words(@comment.created_at) %> ago
+			<td class="default">
+				<div style="margin-top:2px; margin-bottom:-10px; ">
+					<span class="comhead">
+						<%= link_to @comment.user.screen_name, user_path(@comment.user) %>
+						<%= time_ago_in_words(@comment.created_at) %> ago  | 
+						<%= link_to "link", comment_path(@comment) %> | 
+						<% if @comment.parent %>
+							<%= link_to "parent", comment_path(@comment.parent) %>
+						<% else %>
+							<%= link_to "parent", post_path(@comment.post) %>
+						<% end %>
+					</span>
+				</div>
+				<br>
+				<span class="comment">
+					<font color="#000000"><%= @comment.body %></font>
+				</span>
 			</td>
 		</tr>
-		<tr style="height:10px"></tr>
+		<tr style="height:10px">
+		</tr>
 		<tr>
-			<td></td>
+			<td>
+			</td>
 			<td>
 				<%= render :partial => "comments/form", 
 					:locals => { :parent => @comment, :comment => @comment_new } %>
@@ -36,3 +45,6 @@
 
 <%= render comment %>
 <% end %>
+
+
+

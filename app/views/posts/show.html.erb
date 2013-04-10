@@ -24,3 +24,6 @@
 <% @post.comments.nested.each do |comment| %>
 <%= render comment %>
 <% end %>
+<% if @post.comments.empty? %>
+	no comments here...
+<% end %>
