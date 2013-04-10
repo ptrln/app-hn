@@ -1,5 +1,47 @@
-<h1>Comments#index</h1>
-<p>Find me in app/views/comments/index.html.erb</p>
-<pre>
-	#TODO
-</pre>
+
+<table border="0" cellpadding="0" cellspacing="0">
+  <tbody>
+
+  <% @comments.each do |comment| %>
+  <tr>
+    <td valign="top">
+      <center>
+        <a href="#">
+          <img src="/grayarrow.gif" border="0" vspace="3" hspace="2">
+        </a>
+      </center>
+    </td>
+    <td class="default">
+      <div style="margin-top:2px; margin-bottom:-10px; ">
+        <span class="comhead">
+          <%= link_to comment.user.screen_name, user_url(comment.user) %>
+          <%= time_ago_in_words(comment.created_at) %> ago | 
+          <%= link_to "link", comment_path(comment) %> | 
+          <% if comment.parent %>
+            <%= link_to "parent", comment_path(comment.parent) %>
+          <% else %>
+            <%= link_to "parent", post_path(comment.post) %>
+          <% end %>
+          | on: 
+          <%= link_to comment.post.title, post_path(comment.post) %>
+        </span>
+      </div>
+      <br>
+      <span class="comment">
+        <font color="#000000"><%= comment.body %></font>
+      </span>
+    </td>
+  </tr>
+  <tr style="height:15px"></tr>
+
+  <% end %>
+
+  <tr style="height:10px"></tr>
+  <tr>
+    <td colspan="1"></td>
+    <td class="title">
+      <%= paginate @comments %>
+    </td>
+  </tr>
+</tbody>
+</table>

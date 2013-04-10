@@ -2,7 +2,7 @@ class CommentsController < ApplicationController
   before_filter :require_login, only: [:create]
 
 	def newest
-		@comments = Comment.newest.all
+		@comments = Comment.newest.page(params[:page])
 		render :index
 	end
 
@@ -13,7 +13,7 @@ class CommentsController < ApplicationController
   def comment_instance_vars(id)
   	@comment = Comment.find(id)
 		@comment_new = Comment.new
-		@children = Comment.where(
+		@children = Comment.nested.where(
 			'post_id = ? AND nesting LIKE ? AND id != ?',
 			@comment.post_id,
 			"#{@comment.nesting}%",
