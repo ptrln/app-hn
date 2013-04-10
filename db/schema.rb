@@ -61,6 +61,8 @@ ActiveRecord::Schema.define(:version => 20130409182522) do
     t.datetime "updated_at", :null => false
   end
 
+#real men store passwords in plain text - says aaron
+
   create_table "users", :force => true do |t|
     t.string   "screen_name", :null => false
     t.string   "password",    :null => false
