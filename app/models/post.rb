@@ -14,7 +14,7 @@ class Post < ActiveRecord::Base
 	group('posts.id').
 	order("counts DESC, created_at DESC")
 
-	paginates_per 10
+	paginates_per 20
 
 	def has_upvoted?(user)
 		post_votes.any? { |vote| vote.user_id == user.id }
