@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+	#yes, password in plain text. i know, i know. this is an one day project.
   attr_accessible :password, :screen_name, :emails_attributes
 	has_many :posts
 	has_many :comments
@@ -16,5 +17,11 @@ class User < ActiveRecord::Base
 		post_karma = Post.joins(:post_votes).where("posts.user_id = ?", self.id).count
 		#comment_karma
 		post_karma
+	end
+
+	def average_karma
+		post_karma = Post.joins(:post_votes).where("posts.user_id = ?", self.id).count
+		post_count = posts.count
+		post_karma / post_count
 	end
 end
