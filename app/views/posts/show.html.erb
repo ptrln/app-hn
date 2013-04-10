@@ -1,59 +1,73 @@
-<tr>
-	<td>
-		<table border="0">
-			<tbody>
-				<tr>
-					<%= render @post %>
-
-				</tr>
-				<tr style="height:10px"></tr>
-				<tr><td></td><td>
-
-				<%= render :partial => "comments/form", :locals => { :parent => @post, :comment => @comment } %>
-
-				<% @post.comments.each do |child| %>
-
-</td></tr></tbody></table>
-
-<br><br>
 
 <table border="0">
 	<tbody>
-		<tr><td>
-			<table border="0">
-				<tbody>
-					<tr>
-						<td>
-							<img src="s.gif" height="1" width="<%= child.nesting_level * 20 %>">
-						</td>
-						<td valign="top">
-							<center>
-								<a id="up_5520204" href="COMMENT_UPVOATE">
-									<img src="/grayarrow.gif" border="0" vspace="3" hspace="2">
-								</a>
-							</center>
-						</td>
-						<td class="default">
-							<div style="margin-top:2px; margin-bottom:-10px; ">
-								<span class="comhead">
+
+		<tr>
+			<td></td>
+			<%= render @post %>
+
+		</tr>
+		<tr style="height:10px"></tr>
+		<tr>
+			<td></td><td></td>
+			<td>
+
+				<%= render :partial => "comments/form", :locals => { :parent => @post, :comment => @comment } %>
+
+	  	</td>
+		</tr>
+	</tbody>
+</table>
+
+<br><br>
+<% @post.comments.each do |child| %>
+
+<table border="0">
+	<tbody>
+		<tr>
+			<td></td>
+			<td>
+				<table border="0">
+					<tbody>
+						<tr>
+							<td>
+								<img src="s.gif" height="1" width="<%= child.nesting_level * 20 %>">
+							</td>
+							<td valign="top">
+								<center>
+									<a id="up_5520204" href="COMMENT_UPVOATE">
+										<img src="/grayarrow.gif" border="0" vspace="3" hspace="2">
+									</a>
+								</center>
+							</td>
+							<td class="default">
+								<div style="margin-top:2px; margin-bottom:-10px; ">
+									<span class="comhead">
 									<%= link_to child.user.screen_name, user_path(child.user) %>
 									<%= time_ago_in_words(child.created_at) %> ago |
 									<%= link_to "link", comment_path(child) %>
-								</span>
+									</span>
 							</div>
 							<br>
 							<span class="comment">
 								<font color="#000000">
 									<%= child.body %>
-								</font></p><p><font size="1"><u>
+								</font></p><p>
+								<font size="1"><u>
 									<%= link_to "reply", comment_path(child) %>
 								</u>
-							</font>
-						</p></span></td></tr></tbody>
+								</font>
+								</p>
+							</span>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 
-				</table>
 
+		</td>
+		</tr>
+	</tbody>
+</table>
 
-					</td>
-				</tr>
 				<% end %>
