@@ -1,20 +1,27 @@
 class Post < ActiveRecord::Base
   attr_accessible :title, :url, :user_id, :comments_attributes
+
 	belongs_to :user
 	has_many :post_votes
 	has_many :comments
+
 	accepts_nested_attributes_for :comments,
 		:reject_if => lambda { |attributes| attributes['body'].blank? }
+
+	VALID_URL_REGEX = /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/ix
+
+	validates :user, presence: true
+	validates :title, presence: true
+	validates :url, presence: true, format: { with: VALID_URL_REGEX }
 
 	alias_method :author, :user
 
 	scope :newest, order('created_at DESC')
-
 	scope :top,
-	joins("LEFT JOIN post_votes ON posts.id = post_votes.post_id").
-	select("posts.*, SUM(CASE WHEN post_votes.created_at > \"#{1.day.ago}\" THEN 1 ELSE 0 END) AS counts").
-	group('posts.id').
-	order("counts DESC, created_at DESC")
+		joins("LEFT JOIN post_votes ON posts.id = post_votes.post_id").
+		select("posts.*, SUM(CASE WHEN post_votes.created_at > \"#{1.day.ago}\" THEN 1 ELSE 0 END) AS counts").
+		group('posts.id').
+		order("counts DESC, created_at DESC")
 
 	paginates_per 20
 
@@ -25,18 +32,5 @@ class Post < ActiveRecord::Base
 	def host
 		url.split('/')[2]
 	end
+
 end
-
-# SELECT posts.*, count(posts.id) AS count24
-# FROM "posts" INNER JOIN "post_votes"
-# ON "post_votes"."post_id" = "posts"."id" post_votes
-# WHERE (post_votes.created_at > '2013-04-09 00:09:12.627136')
-# ORDER BY count24
-
-
-# SELECT posts.*, count(posts.id)
-# AS counts
-# FROM "posts" INNER JOIN "post_votes"
-# ON "post_votes"."post_id" = "posts"."id" post_votes
-# WHERE (post_votes.created_at > '2013-04-09 00:12:47.286780') ORDER BY counts
-

@@ -1,19 +1,38 @@
-<tr>
-	<td>
-		<table border="0"><tbody><tr><td>
 
-		<center>
-			<a id="up_5519136" href="/"><img src="/grayarrow.gif" border="0" vspace="3" hspace="2"></a><span id="down_5519136"></span></center>
-		</td>
-	<td class="title"><%= @comment.body %></td></tr><tr><td colspan="1"></td><td class="subtext"><span id="score_5519136">unknown points</span> by <%= link_to @comment.user.screen_name, user_path(@comment.user) %> <%= time_ago_in_words(@comment.created_at) %> ago</td></tr><tr style="height:10px"></tr><tr><td></td><td>
-
-				<%= render :partial => "comments/form", :locals => { :parent => @comment, :comment => @comment_new } %>
-
-				<% @children.each do |child| %>
-
-</td></tr></tbody></table>
+<table border="0">
+	<tbody>
+		<tr>
+			<td>
+				<center>
+					<a id="up_5519136" href="/">
+						<img src="/grayarrow.gif" border="0" vspace="3" hspace="2">
+					</a>
+					<span id="down_5519136"></span>
+				</center>
+			</td>
+			<td class="title"><%= @comment.body %></td>
+		</tr>
+		<tr>
+			<td colspan="1"></td>
+			<td class="subtext">
+				<span id="score_5519136">unknown points</span> 
+				by <%= link_to @comment.user.screen_name, user_path(@comment.user) %> 
+				<%= time_ago_in_words(@comment.created_at) %> ago
+			</td>
+		</tr>
+		<tr style="height:10px"></tr>
+		<tr>
+			<td></td>
+			<td>
+				<%= render :partial => "comments/form", 
+					:locals => { :parent => @comment, :comment => @comment_new } %>
+			</td>
+		</tr>
+	</tbody>
+</table>
 
 <br><br>
+<% @children.each do |child| %>
 
 <table border="0">
 	<tbody>
@@ -44,14 +63,17 @@
 								<font color="#000000">
 									<%= child.body %>
 								</font></p><p><font size="1"><u>
-									<%= link_to "reply", comment_path(child) %>
-								</u>
-							</font>
-						</p></span></td></tr></tbody>
+								<%= link_to "reply", comment_path(child) %>
+							</u>
+						</font>
+					</p></span></td></tr></tbody>
 
 				</table>
 
 
-					</td>
-				</tr>
-				<% end %>
+
+			</td>
+		</tr>
+	</tbody>
+</table>
+<% end %>

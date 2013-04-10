@@ -1,3 +1,5 @@
+<%= render :partial => "shared/form_errors", locals: { errors: comment.errors } %>
+
 <%= form_for([parent, comment]) do |f| %>
 	<%= render :partial => 'comments/inner_form', :locals => {:form => f} %>
 	<%= f.submit %>

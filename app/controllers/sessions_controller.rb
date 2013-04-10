@@ -8,6 +8,7 @@ class SessionsController < ApplicationController
 			sign_in(user)
 			redirect_to posts_url
 		else
+      flash.now[:error] = "Incorrect log in"
 			render :new
 		end
   end

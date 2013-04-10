@@ -1,7 +1,10 @@
 module SessionHelper
 
 	def require_login
-		redirect_to new_session_url unless signed_in?
+		unless signed_in?
+			flash[:info] = "You need to log in to do that!"
+			redirect_to new_session_url
+		end
 	end
 
 	def current_user

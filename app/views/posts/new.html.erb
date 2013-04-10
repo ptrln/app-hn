@@ -1,4 +1,7 @@
 <h1>New Post</h1>
+
+<%= render :partial => "shared/form_errors", locals: { errors: @post.errors } %>
+
 <%= form_for(@post) do |f|%>
 
 <%= f.label :title%>
