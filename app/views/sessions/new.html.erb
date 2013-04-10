@@ -1,0 +1,13 @@
+<h1>Log in</h1>
+
+<%= form_tag(session_url, method: :post) do %>
+
+<%= label_tag :screen_name %>
+<%= text_field_tag :screen_name, params[:screen_name], autofocus: true %>
+<br>
+<%= label_tag :password %>
+<%= password_field_tag :password, params[:password] %>
+<br>
+<%= submit_tag %>
+
+<% end %>

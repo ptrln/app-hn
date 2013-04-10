@@ -5,5 +5,12 @@ class User < ActiveRecord::Base
 	has_many :comment_votes
 	has_many :post_votes
 	has_many :emails
-	accepts_nested_attributes_for :emails
+	accepts_nested_attributes_for :emails,
+		:reject_if => lambda { |attributes| attributes['email'].blank? }
+
+	def karma
+		post_karma = Post.joins(:post_votes).where("posts.user_id = ?", self.id).count
+
+		post_karma
+	end
 end

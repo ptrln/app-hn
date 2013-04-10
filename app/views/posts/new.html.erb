@@ -1,2 +1,16 @@
-<h1>Posts#new</h1>
-<p>Find me in app/views/posts/new.html.erb</p>
+<h1>New Post</h1>
+<%= form_for(@post) do |f|%>
+
+<%= f.label :title%>
+<%= f.text_field :title%>
+<br>
+<%= f.label :url %>
+<%= f.text_field :url %>
+<br>
+<%= f.fields_for(:comments) do |comment_form| %>
+<h3>Comment</h3>
+<%= render :partial => "comments/inner_form", :locals => { :form => comment_form }%>
+<br>
+<% end %>
+<%= f.submit %>
+<% end %>

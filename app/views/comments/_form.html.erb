@@ -1,0 +1,4 @@
+<%= form_for([parent, comment]) do |f| %>
+	<%= render :partial => 'comments/inner_form', :locals => {:form => f} %>
+	<%= f.submit %>
+<% end %>

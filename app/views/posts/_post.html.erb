@@ -1,0 +1,33 @@
+<td>
+	<center>
+		<% if signed_in? && post.has_upvoted?(current_user) %>
+		<%= link_to(
+		'<img src="/orangearrow.png" border=0 vspace=3 hspace=2>'.html_safe,
+		post_post_votes_url(post),
+		method: :delete
+		) %>
+		<% else %>
+		<%= link_to(
+		'<img src="/grayarrow.gif" border=0 vspace=3 hspace=2>'.html_safe,
+		post_post_votes_url(post),
+		method: :post
+		) %>
+		<% end %>
+	</center>
+</td>
+<td class="title">
+	<a href="<%= post.url %>"><%= post.title %></a><span class="comhead"> (<%= post.host %>) </span>
+</td>
+
+</tr>
+<tr>
+<td colspan=2>
+</td>
+<td class="subtext">
+	<span>
+		<%= pluralize(post.post_votes.count, "point") %>
+	</span>
+	by <%= link_to post.user.screen_name, user_url(post.user) %>
+	<%= time_ago_in_words(post.created_at) %> ago  |
+	<%= link_to pluralize(post.comments.count, 'comment') , post_url(post)%>
+</td>
