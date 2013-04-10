@@ -7,7 +7,11 @@ class CommentsController < ApplicationController
 	end
 
 	def show
-		@comment = Comment.find(params[:id])
+		comment_instance_vars(params[:id])
+  end
+
+  def comment_instance_vars(id)
+  	@comment = Comment.find(id)
 		@comment_new = Comment.new
 		@children = Comment.where(
 			'post_id = ? AND nesting LIKE ? AND id != ?',
@@ -31,7 +35,7 @@ class CommentsController < ApplicationController
 				nesting: build_nesting(post_comment_count)
 			)
 			if @comment.save
-				redirect_to @comment
+				redirect_to "/posts/" + params[:post_id]
 			else
 				@post = Post.find(params[:post_id])
 				render "posts/show"
@@ -46,10 +50,10 @@ class CommentsController < ApplicationController
 				parent_id: parent.id
 			)
 			if @comment.save
-				redirect_to @comment
+				redirect_to comment_path(parent)
 			else
-				@post = Post.find(params[:post_id])
-				render "posts/show"
+				comment_instance_vars(params[:comment_id])
+				render "comments/show"
 			end
 
 		end

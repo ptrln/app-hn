@@ -8,10 +8,11 @@ class Post < ActiveRecord::Base
 	accepts_nested_attributes_for :comments,
 		:reject_if => lambda { |attributes| attributes['body'].blank? }
 
+	VALID_URL_REGEX = /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/ix
+
 	validates :user, presence: true
 	validates :title, presence: true
-	validates :url, presence: true
-	validate :valid_url
+	validates :url, presence: true, format: { with: VALID_URL_REGEX }
 
 	alias_method :author, :user
 
@@ -32,12 +33,4 @@ class Post < ActiveRecord::Base
 		url.split('/')[2]
 	end
 
-	def valid_url
-	  uri = URI.parse(url)
-	  %w( http https ).include?(uri.scheme)
-	rescue URI::BadURIError
-	  false
-	rescue URI::InvalidURIError
-	  false
-	end
 end

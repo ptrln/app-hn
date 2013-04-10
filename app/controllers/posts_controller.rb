@@ -27,6 +27,7 @@ class PostsController < ApplicationController
 			upvote(@post.id)
 			redirect_to @post
 		else
+      @post.comments.build if @post.comments.size == 0
 			render :new
 		end
   end
