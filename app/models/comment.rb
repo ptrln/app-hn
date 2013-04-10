@@ -1,7 +1,7 @@
 class Comment < ActiveRecord::Base
   attr_accessible :body, :nesting, :parent_id, :post_id, :user_id
 
-	belongs_to :parent
+	belongs_to :parent, class_name: "Comment"
 	belongs_to :post
 	belongs_to :user
 	has_many :comment_votes
@@ -11,9 +11,11 @@ class Comment < ActiveRecord::Base
 	has_many :comment_children, foreign_key: "ancestor_id", class_name: "CommentAncestry"
 	has_many :child_comments, :through => :comment_children, :source => "comment"
 
-	default_scope order('nesting')
+	scope :nested, order('nesting')
 
 	scope :newest, order('created_at DESC')
+
+	paginates_per 20
 
 	validates :body, presence: true
 
