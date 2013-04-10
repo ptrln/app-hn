@@ -7,6 +7,11 @@ class PostsController < ApplicationController
 		@posts = Post.top.page(params[:page])
   end
 
+	def newest
+		@posts = Post.newest.page(params[:page])
+		render :index
+	end
+
 	def new
 		@post = Post.new
 		@post.comments.build

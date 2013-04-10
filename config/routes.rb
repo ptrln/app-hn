@@ -11,5 +11,8 @@ HackerClone::Application.routes.draw do
 		resources :comments, :only => [:create]
 	end
 
+	get '/newest' => "posts#newest"
+	get '/newcomments' => "comments#newest"
+
 	root to: "posts#index"
 end

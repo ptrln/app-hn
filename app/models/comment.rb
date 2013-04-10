@@ -13,6 +13,8 @@ class Comment < ActiveRecord::Base
 
 	default_scope order('nesting')
 
+	scope :newest, order('created_at DESC')
+
 	validates :body, presence: true
 
 	def nesting_level

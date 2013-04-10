@@ -8,6 +8,8 @@ class Post < ActiveRecord::Base
 
 	alias_method :author, :user
 
+	scope :newest, order('created_at DESC')
+
 	scope :top,
 	joins("LEFT JOIN post_votes ON posts.id = post_votes.post_id").
 	select("posts.*, SUM(CASE WHEN post_votes.created_at > \"#{1.day.ago}\" THEN 1 ELSE 0 END) AS counts").

@@ -1,6 +1,11 @@
 class CommentsController < ApplicationController
   before_filter :require_login, only: [:create]
 
+	def newest
+		@comments = Comment.newest.all
+		render :index
+	end
+
 	def show
 		@comment = Comment.find(params[:id])
 		@comment_new = Comment.new
