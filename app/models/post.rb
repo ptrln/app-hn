@@ -17,9 +17,16 @@ class Post < ActiveRecord::Base
 	alias_method :author, :user
 
 	scope :newest, order('created_at DESC')
+	
+#date(\"#{1.day.ago}\") 
+
 	scope :top,
 		joins("LEFT JOIN post_votes ON posts.id = post_votes.post_id").
-		select("posts.*, SUM(CASE WHEN post_votes.created_at > date(\"#{1.day.ago}\") THEN 1 ELSE 0 END) AS counts").
+		select("posts.*, SUM(CASE WHEN post_votes.created_at > #{
+			Rails.env.production? ? 
+				"now() - '1 day'::interval" :
+				"\"#{1.day.ago}\""
+			} THEN 1 ELSE 0 END) AS counts").
 		group('posts.id').
 		order("counts DESC, created_at DESC")
 
